@@ -1,4 +1,4 @@
-# Phase 5 Fix the String DS&A Assessment: Instructor Resources
+# Phase 5 Fix the String Practice Challenge: Instructor Resources
 
 ## General Guidelines
 
