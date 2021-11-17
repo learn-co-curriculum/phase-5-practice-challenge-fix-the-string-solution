@@ -225,7 +225,7 @@ of O(n)
 Space: The only extra variable we are using here is `i`, which does not grow
 with the size of the input. Therefore, the space complexity is O(1).
 
-## Optional: Discussion of Time Complexity for Sample #2
+## Optional: Discussion of Time Complexity for Samples #2 and #3
 
 The outer loop for this solution will only execute once if the string is already
 good. If there are "bad" pairs, it will execute one additional time for each
@@ -253,7 +253,7 @@ inner loop, given that all the characters are part of a "bad" pair, the inner
 loop has to go the maximum possible distance to find each match: m/2, where m is
 the current length of the string. This breaks down to the following:
 
-| Outer Loop | | m | Inner Loop steps (m/2) |
+| Outer Loop | m | Inner Loop steps (m/2) |
 | :-: | :-: | :-: |
 | 1 | 16 | 8 |
 | 2 | 14 | 7 |
