@@ -164,7 +164,7 @@ end
 
 See discussion for Sample #2
 
-## **Challenging** Sample #4: In-place Solution using Two Pointers
+## [Challenging] Sample #4: In-place Solution using Two Pointers
 
 This solution uses a "two-pointer" approach. The first pointer (`i`) is simply
 used to iterate through the input string. Modifications are made to the string
