@@ -1,25 +1,13 @@
 # Phase 5 Fix the String Practice Challenge: Solution
 
-## Scoring Criteria (include?)
-
-While these practice challenges are not scored, the following general guidance
-is provided to help you to evaluate your solution.
-
-| Score | Criteria |
-| :-: | --- |
-| 5 | Solution works; code is clean and understandable; solution has been optimized for space/time efficiency; helper methods may be implemented |
-| 3 | The solution works, but the code needs refactoring or optimization |
-| 1 | The solution does not work |
-
-## Solutions
-
 Several possible approaches to this problem are provided below, along with their
 complexity information.
 
-### Comparing Adjacent Characters
+## Comparing Adjacent Characters
 
-In this challenge, you needed to compare adjacent characters. There are two
-general approaches for doing this. In the solutions given in this lesson, either
+In this challenge, you needed to compare adjacent characters to determine
+whether they are the same letter, but differently cased. There are two general
+approaches for doing this. In the solutions given in this lesson, either
 approach can be substituted for the other.
 
 The first approach uses Ruby methods; either `upcase` or `downcase` can be used:
@@ -38,7 +26,7 @@ table][ascii_table] for more info.
 (str[i].ord - str[i+1].ord).abs != 32
 ```
 
-### Sample #1: Stack solution
+## Sample #1: Stack solution
 
 In this solution, we're using the stack to hold characters that aren't "bad". We
 iterate through the string and, for each character, compare it the top element
@@ -74,7 +62,7 @@ def fix_the_string(str)
 end
 ```
 
-#### Complexity
+### Complexity
 
 ```text
 Time: O(n)
@@ -89,7 +77,7 @@ variable to hold the result. In the worst case — no "bad" characters found —
 they will both wind up holding all of the characters. This gives a complexity of
 O(n) for each or O(2n) total, which reduces to O(n).
 
-### Sample #2: In-place Solution Using Nested Loops
+## Sample #2: In-place Solution Using Nested Loops
 
 This solution and the ones that follow use what is called an "in-place"
 solution. In other words, the input string is manipulated as you go through the
@@ -124,7 +112,7 @@ def fix_the_string(str)
 end
 ```
 
-#### Complexity
+### Complexity
 
 - Time: see below
 - Space : O(1)
@@ -139,7 +127,7 @@ complete discussion at the bottom of the page.
 Space: The only extra variable we are using here is `i`, which does not grow
 with the size of the input. Therefore, the space complexity is O(1).
 
-### Sample #3: In-place Solution Using `slice!`
+## Sample #3: In-place Solution Using `slice!`
 
 This solution is basically the same as the one above, but instead of explicitly
 using a second loop, it manipulates the value of the counter variable, `i`. The
@@ -172,11 +160,11 @@ def fix_the_string(str)
 end
 ```
 
-#### Complexity
+### Complexity
 
 See discussion for Sample #2
 
-### **Challenging** Sample #4: In-place Solution using Two Pointers
+## **Challenging** Sample #4: In-place Solution using Two Pointers
 
 This solution uses a "two-pointer" approach. The first pointer (`i`) is simply
 used to iterate through the input string. Modifications are made to the string
@@ -213,11 +201,11 @@ def fix_the_string(str)
 end
 ```
 
-#### Complexity
+### Complexity
 
 ```text
 Time: O(n)
-Space: O(n)
+Space: O(1)
 ```
 
 Time: We just have a single iteration through the string, which gives complexity
