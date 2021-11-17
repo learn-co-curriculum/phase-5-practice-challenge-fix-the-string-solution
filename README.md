@@ -18,8 +18,9 @@ complexity information.
 
 ### Comparing Adjacent Characters
 
-In this challenge, you needed to compare adjacent characters. In the solutions
-given below, either approach can be substituted for the other.
+In this challenge, you needed to compare adjacent characters. There are two
+general approaches for doing this. In the solutions given in this lesson, either
+approach can be substituted for the other.
 
 The first approach uses Ruby methods; either `upcase` or `downcase` can be used:
 
