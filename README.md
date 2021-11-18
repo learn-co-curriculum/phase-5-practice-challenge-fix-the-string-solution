@@ -162,7 +162,9 @@ end
 
 ### Complexity
 
-See discussion for Sample #2
+Although this solution doesn't explicitly use nested loops, the changes to `i`
+have the same effect. Therefore, the complexity for this example is the same as
+for sample #2.
 
 ## [Challenging] Sample #4: In-place Solution using Two Pointers
 
@@ -214,13 +216,12 @@ of O(n)
 Space: The only extra variable we are using here is `i`, which does not grow
 with the size of the input. Therefore, the space complexity is O(1).
 
-## Optional: Discussion of Time Complexity for Samples #2 and #3
+## Optional: Discussion of Time Complexity for Sample Solution #2
 
-The outer loop for this solution will only execute once if the string is already
-good. If there are "bad" pairs, it will execute one additional time for each
-pair found. Therefore, in the worst case, the number of times the outer loop
-will run is n/2 + 1, since a string of length n can only have n/2 matching
-pairs.
+The outer loop will only execute once if the string is already good. If there
+are "bad" pairs, it will execute one additional time for each pair found.
+Therefore, in the worst case, the number of times the outer loop will run is
+n/2 + 1, since a string of length n can only have n/2 matching pairs.
 
 For example, given the string `aAbBcCdDeE`, the loop will execute 6 times. (In
 the last iteration, all that will happen is the boolean value will be updated to
@@ -233,36 +234,21 @@ iteration of the outer loop.
 
 For example, given the same string, `aAbBcCdDeE`, the inner loop will execute
 once for each iteration through the outer loop except the last one, for a total
-of 5.
+of 5. However, if we were to rearrange the string so the matched pairs occur
+from the middle out — `abcdeEDCBA` — the inner loop has to execute more times to
+find each of the bad pairs.
 
-The worst case scenario would be something like the following:
-`abcdefghHGFEDCBA`. This string contains the maximum possible number of matches,
-so the outer loop will execute the maximum number of times (n/2 = 8). For the
-inner loop, given that all the characters are part of a "bad" pair, the inner
-loop has to go the maximum possible distance to find each match: m/2, where m is
-the current length of the string. This breaks down to the following:
+The total number of steps, therefore, depends on a combination of three factors:
+the number of matched pairs the string contains, the number of unmatched characters
+it contains, and how the matched pairs are arranged within the string.
 
-| Outer Loop | m | Inner Loop steps (m/2) |
-| :-: | :-: | :-: |
-| 1 | 16 | 8 |
-| 2 | 14 | 7 |
-| 3 | 12 | 6 |
-| 4 | 10 | 5 |
-| 5 | 8 | 4 |
-| 6 | 6 | 3 |
-| 7 | 4 | 2 |
-| 8 | 2 | 1 |
+We can be sure that the complexity will fall somewhere between O(n) and O(n²),
+but we can actually do a bit better than that. Because the outer loop executes a
+maximum of n/2 times, and the inner loop is short-circuited by the in-place
+changes to the string, the change to the total number of steps relative to the
+size of the input string will be much closer to n than to n².
 
-The total number of steps, therefore, is:
-
-```text
-8 + 7 + 6 ... + 1 = 36
-```
-
-This value is what's known as the [Triangular Number][triangular-number],
-T<sub>n</sub>. In this case, we are calculating it based on n/2, so the actual
-worst-case time complexity would be O(T<sub>n/2</sub>). This value is greater
-than O(n) but well short of O(n²).
+Test it out for yourself: you can add a counter variable inside the inner loop
+and see how changes to the input string affect the number of steps.
 
 [ascii_table]: https://theasciicode.com.ar/
-[triangular-number]: https://en.wikipedia.org/wiki/Triangular_number
