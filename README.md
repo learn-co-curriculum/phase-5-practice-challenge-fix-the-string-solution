@@ -41,23 +41,21 @@ it to our result string, and return that value.
 
 ```rb
 def fix_the_string(str)
+  # we can use an array to stand in for a stack, or implement a stack class
   stack = []
-  result = ''
 
   # Iterate through the string, adding the "good" characters to the stack
   str.each_char do |char|
-    if stack.size.zero? || (char.ord - stack[stack.size - 1].ord).abs != 32
-      stack.push(char)
-    else
+    if !stack.empty? && char != stack.last && char.upcase == stack.last.upcase
       stack.pop
+    else
+      stack.push(char)
     end
   end
 
   # Pop each element off the stack and add it to the result string
-  while stack.size.positive?
-    result = stack.pop + result
-    num_steps += 1
-  end
+  result = ''
+  result = stack.pop + result until stack.empty?
 
   result
 end
@@ -99,7 +97,7 @@ def fix_the_string(str)
   continue = true
   while continue
     continue = false
-    (0...str.size - 1).each do |i|
+    (str.size - 1).times do |i|
       # If a pair of "bad" characters is found, remove them from the string,
       # update the boolean to continue the outer loop, and end the inner loop
       if (str[i] != str[i + 1]) && (str[i].upcase == str[i + 1].upcase)
@@ -144,18 +142,14 @@ characters have been removed from the string.
 
 ```rb
 def fix_the_string(str)
-  return str if str.size < 2
-
   i = 0
-  continue = true
-  while continue
-    if str[i] != str[i + 1] && str[i].upcase == str[i + 1].upcase
+  while i < str.size - 1 && !str.empty?
+    if bad_pair?(str[i], str[i + 1])
       str.slice!(i..i + 1)
       i = 0
     else
       i += 1
     end
-    continue = false if i == str.size - 1 || str.size.zero?
   end
   str
 end
@@ -173,35 +167,35 @@ This solution uses a "two-pointer" approach. The first pointer (`i`) is simply
 used to iterate through the input string. Modifications are made to the string
 as we go, "behind" `i`, to overwrite "bad" characters.
 
-The second pointer, `p`, keeps track of where we are in the modified version of
-the string, i.e., the location where the last "good" character is. `p` is only
+The second pointer, `j`, keeps track of where we are in the modified version of
+the string, i.e., the location where the last "good" character is. `j` is only
 advanced if we know the current character is good, and "bad" characters are
-overwritten at the location of `p`. This ensures that everything up to `p` is
+overwritten at the location of `j`. This ensures that everything up to `j` is
 good and should be returned at the end of the method.
 
 Note that we aren't removing characters as we go, so the string will still be
-its original length by the end of the method. We use `p` to return just the
+its original length by the end of the method. We use `j` to return just the
 portion of the string we know is good.
 
 ```rb
 def fix_the_string(str)
-  p = 0
+  j = 0
   i = 0
   while i < str.size
-    # If we find a pair that needs to be removed, we want to "back up" p and not include
+    # If we find a pair that needs to be removed, we want to "back up" j and not include
     # the current character in the modified version of the string
-    if p > 0 && (str[i].ord - str[p - 1].ord).abs == 32
-      p -= 1
+    if j > 0 && (str[i].ord - str[j - 1].ord).abs == 32
+      j -= 1
     else
-      # otherwise, we set the character at p to the "good" character at the current value of i
-      str[p] = str[i]
-      p += 1
+      # otherwise, we set the character at j to the "good" character at the current value of i
+      str[j] = str[i]
+      j += 1
     end
     i += 1
   end
 
-  # We return the portion of the string up to p - 1, the location of the last "good" character
-  str[0..p - 1]
+  # We return the portion of the string up to j - 1, the location of the last "good" character
+  str[0..j - 1]
 end
 ```
 
@@ -215,8 +209,8 @@ Space: O(1)
 Time: We just have a single iteration through the string, which gives complexity
 of O(n)
 
-Space: The only extra variable we are using here is `i`, which does not grow
-with the size of the input. Therefore, the space complexity is O(1).
+Space: The only extra variables we are using here are `i` and `j`, which do not
+grow with the size of the input. Therefore, the space complexity is O(1).
 
 ## Optional: Discussion of Time Complexity for Sample Solution #2
 
