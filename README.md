@@ -1,4 +1,4 @@
-# Phase 5 Fix the String Practice Challenge: Solution
+# Practice Challenge Solution: Fix the String
 
 Several possible approaches to this problem are provided below, along with their
 complexity information.
@@ -14,7 +14,7 @@ The first approach uses Ruby methods; either `upcase` or `downcase` can be used:
 
 ```rb
 # Ruby upcase (or downcase) method:
-str[i] != str[i+1] && str[i].upcase == str[i+1].upcase
+str[i] != str[i + 1] && str[i].upcase == str[i + 1].upcase
 ```
 
 The second approach uses ASCII math, along with the Ruby `#ord` method, which
@@ -23,7 +23,7 @@ table][ascii_table] for more info.
 
 ```rb
 # ASCII math
-(str[i].ord - str[i+1].ord).abs != 32
+(str[i].ord - str[i + 1].ord).abs != 32
 ```
 
 ## Sample #1: Stack solution
@@ -43,9 +43,10 @@ it to our result string, and return that value.
 def fix_the_string(str)
   stack = []
   result = ''
+
   # Iterate through the string, adding the "good" characters to the stack
   str.each_char do |char|
-    if stack.size.zero? || (char.ord - stack[stack.size - 1].ord).abs != 32 
+    if stack.size.zero? || (char.ord - stack[stack.size - 1].ord).abs != 32
       stack.push(char)
     else
       stack.pop
@@ -95,20 +96,20 @@ statement will not execute and the `while` loop will end.
 
 ```rb
 def fix_the_string(str)
-    continue = true
-    while continue
-        continue = false
-        (0...str.size-1).each do |i|
-            # If a pair of "bad" characters is found, remove them from the string,
-            # update the boolean to continue the outer loop, and end the inner loop
-            if (str[i] != str[i+1]) && (str[i].upcase == str[i+1].upcase)
-                str = str[0...i] + str[i+2..-1]
-                continue = true
-                break
-            end
-        end
+  continue = true
+  while continue
+    continue = false
+    (0...str.size - 1).each do |i|
+      # If a pair of "bad" characters is found, remove them from the string,
+      # update the boolean to continue the outer loop, and end the inner loop
+      if (str[i] != str[i + 1]) && (str[i].upcase == str[i + 1].upcase)
+        str = str[0...i] + str[i + 2..-1]
+        continue = true
+        break
+      end
     end
-    str
+  end
+  str
 end
 ```
 
@@ -148,10 +149,10 @@ def fix_the_string(str)
   i = 0
   continue = true
   while continue
-    if str[i] != str[i+1] && str[i].upcase == str[i+1].upcase
-      str.slice!(i..i+1)
+    if str[i] != str[i + 1] && str[i].upcase == str[i + 1].upcase
+      str.slice!(i..i + 1)
       i = 0
-    else 
+    else
       i += 1
     end
     continue = false if i == str.size - 1 || str.size.zero?
@@ -198,8 +199,9 @@ def fix_the_string(str)
     end
     i += 1
   end
+
   # We return the portion of the string up to p - 1, the location of the last "good" character
-  str[0..p-1]
+  str[0..p - 1]
 end
 ```
 
@@ -239,8 +241,9 @@ from the middle out — `abcdeEDCBA` — the inner loop has to execute more time
 find each of the bad pairs.
 
 The total number of steps, therefore, depends on a combination of three factors:
-the number of matched pairs the string contains, the number of unmatched characters
-it contains, and how the matched pairs are arranged within the string.
+the number of matched pairs the string contains, the number of unmatched
+characters it contains, and how the matched pairs are arranged within the
+string.
 
 We can be sure that the complexity will fall somewhere between O(n) and O(n²),
 but we can actually do a bit better than that. Because the outer loop executes a
